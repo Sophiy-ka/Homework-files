@@ -1,6 +1,6 @@
-def cook_book(recipes):
+def read_recipes(filename):
     cook_book = {}
-    with open('resipes.txt', 'r', encoding='utf-8') as file:
+    with open(filename, 'r', encoding='utf-8') as file:
         while True:
             recipe_name = file.readline().strip()
             if not recipe_name:
@@ -9,16 +9,17 @@ def cook_book(recipes):
             ingredients = []
             for _ in range(ingredient_count):
                 ingredient_info = file.readline().strip().split(' | ')
-            ingredients.append({
-                'ingredient_name': ingredient_info[0],
-                'quantity': int(ingredient_info[1]),
-                'measure': ingredient_info[2]
-            })
+                ingredient = {
+                    'ingredient_name': ingredient_info[0],
+                    'quantity': int(ingredient_info[1]),
+                    'measure': ingredient_info[2]
+                }
+                ingredients.append(ingredient)
             cook_book[recipe_name] = ingredients
             file.readline()
     return cook_book
 
-def get_shop_list_by_dishes(dishes, person_count):
+def get_shop_list_by_dishes(dishes, person_count, cook_book):
     shop_list = {}
     for dish in dishes:
         if dish in cook_book:
